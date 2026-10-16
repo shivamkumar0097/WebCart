@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>GlassHub - Shivam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">GlassHub</div>
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" id="searchBox" placeholder="Search for products..." oninput="renderProducts()">
+      </div>
+      <div class="header-icons">
+        <span onclick="toggleCart()" style="cursor:pointer;">🛒 <span id="cartCount">0</span></span>
+      </div>
+    </div>
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="setCategory('all', this)">For You</button>
+      <button class="cat-tab" onclick="setCategory('tech', this)">Electronics</button>
+      <button class="cat-tab" onclick="setCategory('lifestyle', this)">Lifestyle</button>
+    </div>
+  </div>
+
+  <div id="page-home" class="container">
+    <div class="deal-banner">
+      <div>
+        <h3>Top deals on tech</h3>
+
+      </div>
+      <div class="deal-badge">BEST OFFERS</div>
+    </div>
+    <div class="section-title">Suggested For You</div>
+    <div class="grid" id="productGrid"></div>
+    <div class="stats">
+      <div class="stat">
+        <h3 id="statUsers">0</h3>
+        <p>Users</p>
+      </div>
+      <div class="stat">
+        <h3>8</h3>
+        <p>Products</p>
+      </div>
+      <div class="stat">
+        <h3 id="statOrders">0</h3>
+        <p>Orders</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-login" class="container hidden">
+    <div class="auth-box">
+      <h2>Login</h2>
+      <p>Login to continue shopping</p>
+      <button class="btn-google" onclick="googleAuth()">
+        <img src="https://www.google.com/favicon.ico" alt="Google"> Continue with Google
+      </button>
+      <div class="divider">or</div>
+      <input type="email" id="loginEmail" placeholder="Email">
+      <input type="password" id="loginPass" placeholder="Password">
+      <button class="btn-primary" onclick="login()">Login</button>
+      <p class="msg" id="loginMsg"></p>
+      <p style="margin-top:12px;font-size:13px;color:#878787;">
+        New here? <a href="#" style="color:#2874f0;" onclick="showPage('signup');return false;">Create Account</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="page-signup" class="container hidden">
+    <div class="auth-box">
+      <h2>Create Account</h2>
+      <p>Sign up to start shopping</p>
+      <button class="btn-google" onclick="googleAuth()">
+        <img src="https://www.google.com/favicon.ico" alt="Google"> Continue with Google
+      </button>
+      <div class="divider">or</div>
+      <input type="text" id="signupName" placeholder="Full Name">
+      <input type="email" id="signupEmail" placeholder="Email">
+      <input type="tel" id="signupPhone" placeholder="Phone Number">
+      <textarea id="signupAddress" placeholder="Full Delivery Address"></textarea>
+      <input type="password" id="signupPass" placeholder="Password (min 4)">
+      <button class="btn-primary" onclick="signup()">Create Account</button>
+      <p class="msg" id="signupMsg"></p>
+      <p style="margin-top:12px;font-size:13px;color:#878787;">
+        Already have account? <a href="#" style="color:#2874f0;" onclick="showPage('login');return false;">Login</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="page-dashboard" class="container hidden">
+    <div class="section-title">Hi, <span id="dashName">User</span> 👋</div>
+    <div class="stats">
+      <div class="stat">
+        <h3 id="dashOrders">0</h3>
+        <p>Orders</p>
+      </div>
+      <div class="stat">
+        <h3 id="dashCart">0</h3>
+        <p>In Cart</p>
+      </div>
+      <div class="stat">
+        <h3 id="dashSpent">₹0</h3>
+        <p>Spent</p>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:8px;padding:14px;margin-top:12px;">
+      <h3 style="margin-bottom:10px;font-size:15px;">Recent Orders</h3>
+      <div id="orderList">
+        <p style="color:#878787;">No orders yet</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-profile" class="container hidden">
+    <div class="auth-box" style="text-align:left;">
+      <h2 style="text-align:center;margin-bottom:16px;">Profile</h2>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
+        <span>Name</span><strong id="profName">-</strong></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
+        <span>Email</span><strong id="profEmail">-</strong></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;">
+        <span>Phone</span><strong id="profPhone">-</strong></div>
+      <div style="padding:10px 0;border-bottom:1px solid #eee;"><span
+          style="display:block;margin-bottom:4px;color:#878787;">Address</span><strong id="profAddress">-</strong></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;"><span>Member since</span><strong
+          id="profDate">-</strong></div>
+      <button class="btn-primary" style="margin-top:16px;" onclick="showPage('dashboard')">Dashboard</button>
+      <button class="btn-primary" style="margin-top:8px;background:#ff6161;" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div id="page-success" class="container hidden">
+    <div class="success-box">
+      <div class="success-icon">✓</div>
+      <h2>Order Placed!</h2>
+      <p>Thank you for shopping with GlassHub.</p>
+      <p style="font-size:13px;color:#878787;margin:8px 0;">Order ID: <span id="successOrderId">-</span></p>
+      <p style="margin-bottom:8px;">Total: ₹<span id="successTotal">0</span></p>
+      <p style="margin-bottom:16px;font-size:13px;color:#878787;">Shipping from Delhi</p>
+      <button class="btn-primary" style="margin-bottom:8px;" onclick="trackLatest()">Track Order</button>
+      <button class="btn-primary" style="background:#ff9f00;" onclick="showPage('home')">Continue Shopping</button>
+    </div>
+  </div>
+
+  <div id="page-track" class="container hidden">
+    <div class="tracker-box">
+      <h2 style="margin-bottom:6px;">Track Order</h2>
+      <p style="font-size:13px;color:#878787;margin-bottom:4px;">📦 Ships from <strong>Delhi</strong></p>
+      <p style="font-size:13px;color:#878787;margin-bottom:4px;">Order ID: <span id="trackId">-</span></p>
+      <p style="font-size:13px;color:#878787;margin-bottom:4px;">Deliver to: <span id="trackAddress">-</span></p>
+      <div class="eta">⏱ Estimated: <strong id="trackEta">3–5 days</strong></div>
+      <div class="timeline" id="trackTimeline"></div>
+      <button class="btn-primary" style="margin-top:16px;" onclick="showPage('dashboard')">Back to Orders</button>
+    </div>
+  </div>
+
+  <div id="page-product" class="container hidden">
+    <div id="productDetail"></div>
+    <button class="btn-primary" style="background:#878787;margin-top:12px;" onclick="showPage('home')">Back</button>
+  </div>
+
+  <div class="cart-panel" id="cartPanel">
+    <h2 style="margin-bottom:14px;">Your Cart</h2>
+    <div id="cartItems"></div>
+    <div style="font-size:18px;font-weight:600;margin:16px 0;">Total: ₹<span id="cartTotal">0</span></div>
+    <textarea id="checkoutAddress" placeholder="Delivery address"></textarea>
+    <button class="btn-primary" onclick="confirmPayment()">Confirm Payment</button>
+    <button class="btn-primary" style="background:#878787;margin-top:8px;" onclick="toggleCart()">Close</button>
+  </div>
+
+  <div id="productModal" class="modal hidden" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-emoji" id="modalEmoji">🎧</div>
+      <h2 id="modalName">Product</h2>
+      <p id="modalPrice" style="color:#2874f0;font-size:20px;margin:10px 0;"></p>
+      <p id="modalDesc" style="color:#878787;font-size:14px;margin-bottom:16px;"></p>
+      <button class="btn-primary" id="modalAddBtn">Add to Cart</button>
+      <button class="btn-primary" style="background:#878787;margin-top:8px;" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Added to cart</div>
+
+  <div id="page-payment" class="container hidden">
+    <div style="max-width:400px;margin:20px auto;background:#fff;border-radius:8px;padding:20px;">
+      <h2 style="margin-bottom:16px;">Payment</h2>
+      <div id="payProduct" style="margin-bottom:16px;"></div>
+      <div style="background:#f5f5f5;border-radius:6px;padding:12px;margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span>Item Total</span><span
+            id="payPrice">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span>Delivery</span><span
+            style="color:#388e3c;">FREE</span></div>
+        <div
+          style="display:flex;justify-content:space-between;font-weight:600;border-top:1px solid #ddd;padding-top:8px;">
+          <span>Total</span><span id="payTotal">₹0</span></div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <label style="font-size:13px;color:#878787;">Payment Method</label>
+        <div style="border:1px solid #ddd;border-radius:6px;padding:12px;margin-top:6px;">
+          <input type="radio" name="pay" checked> UPI / Card / Net Banking
+        </div>
+      </div>
+      <button class="btn-primary" onclick="processPayment()">Pay Now</button>
+      <button class="btn-primary" style="background:#878787;margin-top:8px;" onclick="showPage('product')">Back</button>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="showPage('home')" id="navHome"><span>🏠</span>Home</button>
+    <button class="nav-item" onclick="showPage('dashboard')" id="navDash"><span>📦</span>Orders</button>
+    <button class="nav-item" onclick="showPage('profile')" id="navProfile"><span>👤</span>Account</button>
+    <button class="nav-item" onclick="toggleCart()"><span>🛒</span>Cart</button>
+  </div>
+
+  <footer>Made by Shivam • GlassHub</footer>
+  <script src="script.js"></script>
+</body>
+
+</html>
