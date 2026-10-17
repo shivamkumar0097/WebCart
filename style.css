@@ -17,8 +17,13 @@ body {
 }
 .logo { color: #fff; font-size: 20px; font-weight: 700; }
 .search-bar {
-  flex: 1; background: #fff; border-radius: 20px; padding: 6px 12px;
-  display: flex; align-items: center; gap: 6px; max-width: 280px;
+  flex: 1; background: #fff; border-radius: 16px; padding: 4px 10px;
+  display: flex; align-items: center; gap: 4px; max-width: 200px; height: 32px;
+}
+.search-bar input {
+  border: none; outline: none; flex: 1; font-size: 12px; background: transparent;
+}
+.search-bar span { color: #878787; font-size: 12px; }
 }
 .search-bar input {
   border: none; outline: none; flex: 1; font-size: 13px; background: transparent;
