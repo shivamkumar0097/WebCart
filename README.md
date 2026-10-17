@@ -13,7 +13,7 @@ A modern e-commerce website built with HTML, CSS, and JavaScript.
 
 ## Live Demo
 
-[View Website](https://glasshub-by-shivam.netlify.app)
+[View Website](https://shivam-webcart.netlify.app)
 
 ## Tech Stack
 
